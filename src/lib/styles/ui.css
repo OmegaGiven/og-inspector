@@ -1,0 +1,222 @@
+/* Shared control primitives used across all three modules.
+   One standard row height (26px / 22px "sm") for every control that can
+   share a line with others — button, input, select, icon button — so a
+   toolbar row lines up instead of each control finding its own height
+   from its own padding/font-size. */
+:root {
+  --ctrl-h: 26px;
+  --ctrl-h-sm: 22px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: var(--ctrl-h);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 0 11px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--surface-2);
+  color: var(--text-primary);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover {
+  background: var(--surface-3);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn.primary {
+  background: var(--text-primary);
+  color: var(--surface-0);
+  border-color: var(--text-primary);
+}
+.btn.primary:hover {
+  opacity: 0.88;
+}
+.btn.ghost {
+  border-color: transparent;
+  background: transparent;
+}
+.btn.ghost:hover {
+  background: var(--surface-3);
+}
+.btn.danger {
+  color: var(--danger);
+  border-color: color-mix(in srgb, var(--danger) 45%, var(--border-strong));
+}
+.btn.sm {
+  height: var(--ctrl-h-sm);
+  padding: 0 8px;
+  font-size: 11px;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 12px;
+  padding: 0 9px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--surface-2);
+  color: var(--text-primary);
+}
+.input,
+.select {
+  height: var(--ctrl-h);
+}
+.input.sm,
+.select.sm {
+  height: var(--ctrl-h-sm);
+  padding: 0 8px;
+  font-size: 11.5px;
+}
+.select {
+  /* Drop native OS chrome (which ignores background/color on some
+     platforms — the "white Mac-looking box" complaint) and draw our own
+     caret so the closed control is fully themed. The open options list
+     is still OS-drawn; browsers don't expose a cross-platform way to
+     skin that part. */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 26px;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23888780' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 9px center;
+}
+.select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Uniform square icon-only button — one fixed box, glyph dead-centered,
+   used everywhere a button's entire content is a single icon (no text
+   label beside it: rename, delete, refresh, expand chevrons, new-folder,
+   etc.). Fixes icons that used to be different sizes and off-center
+   because every place that needed one rolled its own padding/font-size. */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--ctrl-h);
+  height: var(--ctrl-h);
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+}
+.icon-btn:hover {
+  background: var(--surface-3);
+  color: var(--text-primary);
+}
+.icon-btn.danger:hover {
+  color: var(--danger);
+}
+.icon-btn.sm {
+  width: var(--ctrl-h-sm);
+  height: var(--ctrl-h-sm);
+  font-size: 11px;
+}
+.icon-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.icon-btn.on {
+  background: var(--tool-sql-tint);
+  color: var(--tool-sql-text);
+}
+.icon-btn:disabled:hover {
+  background: none;
+  color: var(--text-muted);
+}
+.textarea {
+  font-family: var(--font-mono);
+  padding: 7px 9px;
+  resize: vertical;
+  min-height: 70px;
+}
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: 2px solid color-mix(in srgb, var(--text-secondary) 40%, transparent);
+  outline-offset: -1px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 12px;
+}
+.field > label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.row {
+  display: flex;
+  gap: 10px;
+}
+.row > .field {
+  flex: 1;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+.mono {
+  font-family: var(--font-mono);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 100%;
+  color: var(--text-muted);
+  font-size: 12px;
+  text-align: center;
+  padding: 24px;
+}
+
+/* Every icon in the app (icons.js) renders as an inline <svg class="ico-svg">
+   sized in `em` so it scales with its container's font-size. An inline
+   SVG's default baseline sits noticeably above surrounding text — this is
+   the one shared rule that fixes it everywhere at once, plus a bit of
+   right-margin when it's followed directly by a text label. */
+.ico-svg {
+  vertical-align: -0.15em;
+  flex-shrink: 0;
+}
+.btn .ico-svg + :not(.ico-svg),
+button .ico-svg:not(:last-child) {
+  margin-right: 0.4em;
+}
