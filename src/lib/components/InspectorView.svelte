@@ -29,9 +29,10 @@
       const decoded = decodeJwt(jwtInput);
       const status = decoded.expired === true ? ' · expired' : decoded.expired === false ? ' · not expired' : '';
       sendToInspector('jwt', `Decoded JWT${status}`, decoded);
+      // keep the token pasted above so it can be tweaked and re-decoded;
+      // the decoded tree renders right below it
       rawMode = false;
-      jwtMode = false;
-      jwtInput = '';
+      mode = 'tree';
     } catch (e) {
       jwtError = e.message;
     }
@@ -608,7 +609,7 @@
       {rawMode ? '← Loaded data' : 'Paste'}
     </button>
     <button class="btn ghost sm" class:active={jwtMode} on:click={() => ((jwtMode = !jwtMode), (rawMode = false))}>
-      {jwtMode ? '← Loaded data' : 'Decode JWT'}
+      {jwtMode ? 'Hide JWT' : 'Decode JWT'}
     </button>
   </div>
 
