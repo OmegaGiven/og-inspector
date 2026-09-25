@@ -16,7 +16,6 @@
       <span class="tag">JSON · CSV · TSV · NDJSON · JWT</span>
     </div>
     <span style="flex:1" />
-    <span class="local" title="Files are read with the browser's FileReader and never uploaded">Runs 100% in your browser</span>
     <a class="btn ghost sm" href="https://github.com/OmegaGiven/og-inspector" target="_blank" rel="noopener">GitHub</a>
     <a
       class="btn ghost sm"
@@ -79,10 +78,6 @@
     color: var(--text-muted);
     white-space: nowrap;
   }
-  .local {
-    font-size: 11px;
-    color: var(--text-muted);
-  }
   a.btn {
     text-decoration: none;
   }
@@ -91,8 +86,7 @@
     min-height: 0;
   }
   @media (max-width: 760px) {
-    .tag,
-    .local {
+    .tag {
       display: none;
     }
   }
